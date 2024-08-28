@@ -1,0 +1,21 @@
+{
+  "name": "api-gen",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc && node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@effect/schema": "^0.71.1",
+    "effect": "^3.6.5",
+    "typescript": "^5.5.4",
+    "yaml": "^2.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.1"
+  }
+}

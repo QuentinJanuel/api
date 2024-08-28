@@ -1,0 +1,4 @@
+*.yml
+example
+node_modules
+dist
