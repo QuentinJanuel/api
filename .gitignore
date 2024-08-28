@@ -1,4 +1,5 @@
 *.yml
+*.yaml
 example
 node_modules
 dist
