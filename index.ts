@@ -1,5 +1,3 @@
-// import { example } from "./example";
-
-// example()
-
-export * as test from "./api"
+export { createAPI } from "./api"
+export * as type from "./api/types"
+export { createEndpoint } from "./api/endpoint"
