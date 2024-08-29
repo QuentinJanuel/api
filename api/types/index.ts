@@ -109,7 +109,7 @@ const objectOpenAPI = (o: TObject): openapi.Type => ({
 
 export type TValue = TLit | TArray | TObject;
 export const schema = (value?: TValue): string => {
-  if (!value) return "S.Void";
+  if (!value) return "S.Struct({})";
   switch (value.type) {
     case "array": return arraySchema(value);
     case "object": return objectSchema(value);
