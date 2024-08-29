@@ -69,7 +69,7 @@ const apiToTS = function (api: API): string {
   )}
   `
   return `
-import * as S from "@effect/Schema/Schema"
+import * as S from "@effect/schema/Schema"
 
 export const endpoints = {
   ${pipe(
