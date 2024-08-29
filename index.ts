@@ -2,4 +2,4 @@
 
 // example()
 
-export * from "./api"
+export * as test from "./api"
