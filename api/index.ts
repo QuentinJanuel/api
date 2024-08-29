@@ -85,7 +85,7 @@ export const endpoints = {
         : `S.Never`
       },
       isStream: ${e.stream !== undefined},
-      streamSerializer: "${e.stream?.serializerName ?? ""}",
+      streamSerializer: "${e.stream?.serializerName ?? ""} as const",
     },`),
     A.join("\n"),
   )}
