@@ -1,3 +1,5 @@
-import { example } from "./example";
+// import { example } from "./example";
 
-example()
+// example()
+
+export * from "./api"
