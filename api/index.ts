@@ -6,31 +6,34 @@ import { pipe } from "effect"
 import * as YAML from "yaml"
 import fs from "fs"
 import * as types from "./types"
+import { apiToHTML } from "./html"
 
 export * as endpoint from "./endpoint"
 export * as types from "./types"
 
-type API = {
+export type API = {
   title: string
   description?: string
   version: openapi.Version
   endpoints: endpoint.Endpoint[]
 }
 
+export const apiToOpenAPI = (api: API): openapi.OpenAPI => ({
+  openapi: "3.0.0",
+  info: {
+    title: api.title,
+    description: api.description ?? "",
+    version: api.version,
+  },
+  paths: pipe(
+    api.endpoints,
+    A.map(e => [e.path, endpoint.openAPI(e)] as const),
+    R.fromEntries,
+  ),
+})
+
 const apiToYAML = function (api: API): string {
-  const openAPISchema: openapi.OpenAPI = {
-    openapi: "3.0.0",
-    info: {
-      title: api.title,
-      description: api.description ?? "",
-      version: api.version,
-    },
-    paths: pipe(
-      api.endpoints,
-      A.map(e => [e.path, endpoint.openAPI(e)] as const),
-      R.fromEntries,
-    )
-  }
+  const openAPISchema = apiToOpenAPI(api)
   const yaml = YAML.stringify(openAPISchema, {
     strict: true,
     aliasDuplicateObjects: false,
@@ -86,11 +89,25 @@ export const serializers = {
   `
 }
 
-export const createAPI = function (api: API) {
+interface Exports {
+  yaml?: string
+  ts?: string
+  html?: string
+}
+
+export const createAPI = function (api: API, exports: Exports) {
   if (endpoint.hasDuplicates(api.endpoints))
     throw new Error("Duplicate endpoints")
-  const yaml = apiToYAML(api)
-  const ts = apiToTS(api)
-  fs.writeFileSync("openapi.yaml", yaml)
-  fs.writeFileSync("schemas.ts", ts)
+  if (exports.yaml !== undefined) {
+    const yaml = apiToYAML(api)
+    fs.writeFileSync(exports.yaml, yaml)
+  }
+  if (exports.ts !== undefined) {
+    const ts = apiToTS(api)
+    fs.writeFileSync(exports.ts, ts)
+  }
+  if (exports.html !== undefined) {
+    const html = apiToHTML(api)
+    fs.writeFileSync(exports.html, html)
+  }
 }

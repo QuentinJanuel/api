@@ -4,3 +4,4 @@ example
 node_modules
 dist
 schemas.ts
+index.html
