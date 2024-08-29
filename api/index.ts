@@ -75,7 +75,7 @@ export const endpoints = {
   ${pipe(
     api.endpoints,
     A.map(e => `"${e.path}": {
-      method: "${e.method}",
+      method: "${e.method}" as const,
       path: "${e.path}",
       request: ${types.schema(e.request)},
       response: ${types.schema(e.response)},
