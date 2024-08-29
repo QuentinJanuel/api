@@ -1,6 +1,8 @@
 import * as types from "../types"
 import * as openapi from "../openapi"
 
+type Error = Uppercase<string>
+
 interface EndpointConfig {
   /**
    * The path of the endpoint
@@ -26,7 +28,7 @@ interface EndpointConfig {
   /**
    * The error codes of the endpoint
    */
-  errors?: string[]
+  errors?: Error[]
   /**
    * If set, the endpoint will be a stream
    */
@@ -41,7 +43,7 @@ export interface Endpoint {
   method: openapi.Method
   request?: types.TValue
   response?: types.TValue
-  errors: string[]
+  errors: Error[]
   stream?: {
     serializerName: string
   },
