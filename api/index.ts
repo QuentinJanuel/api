@@ -84,7 +84,7 @@ export const endpoints = {
         ? pipe(e.errors, types.enum_, types.schema)
         : `S.Never`
       },
-      isStream: ${e.stream !== undefined},
+      isStream: ${e.stream !== undefined} as const,
       streamSerializer: "${e.stream?.serializerName ?? ""}" as const,
     },`),
     A.join("\n"),
