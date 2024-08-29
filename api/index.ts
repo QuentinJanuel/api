@@ -51,6 +51,23 @@ const apiToTS = function (api: API): string {
       response: types.schema(e.response),
     })),
   )
+  const serializersCode =
+    serializers.length === 0
+    ? "{}"
+    : `
+{
+  ${pipe(
+    serializers,
+    A.map(s => `...{ "${s.serializer}": ${s.response} },`),
+    A.join("\n"),
+  )}
+} satisfies
+  ${pipe(
+    serializers,
+    A.map(s => `{ ${s.serializer}: (typeof endpoints)["${s.endpoint}"]["response"] }`),
+    A.join(" &\n"),
+  )}
+  `
   return `
 import * as S from "@effect/Schema/Schema"
 
@@ -74,18 +91,7 @@ export const endpoints = {
   )}
 }
 
-export const serializers = {
-  ${pipe(
-    serializers,
-    A.map(s => `...{ "${s.serializer}": ${s.response} },`),
-    A.join("\n"),
-  )}
-} satisfies
-  ${pipe(
-    serializers,
-    A.map(s => `{ ${s.serializer}: (typeof endpoints)["${s.endpoint}"]["response"] }`),
-    A.join(" &\n"),
-  )}
+export const serializers = ${serializersCode}
   `
 }
 
