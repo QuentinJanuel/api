@@ -79,6 +79,7 @@ export const endpoints = {
       path: "${e.path}",
       request: ${types.schema(e.request)},
       response: ${types.schema(e.response)},
+      responseDefault: ${types.defaultValue(e.response ?? types.object({}))},
       errors: ${
         e.errors.length > 0
         ? pipe(e.errors, types.enum_, types.schema)
