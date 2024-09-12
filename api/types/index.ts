@@ -106,7 +106,8 @@ const arrayOpenAPI = (a: TArray): openapi.Type =>
   });
 const arrayDefault = (a: TArray): string => {
   const item = defaultValue(a.items);
-  return `Array.from({ length: ${a.minItems ?? 0} }).map(() => (${item}))`;
+  const minItems = a.minItems ?? 0;
+  return `Array.from({ length: ${minItems + 1} }).map(() => (${item}))`;
 }
 
 type TObject = { type: "object"; properties: Record<string, TValue> };
