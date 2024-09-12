@@ -42,7 +42,7 @@ type TFile = { type: "file" };
 export const file: TFile = { type: "file" };
 const fileSchema = "S.instanceOf(File)";
 const fileOpenAPI: openapi.Type = { type: "string", format: "binary" };
-const fileDefault = `new File([], "filename");`
+const fileDefault = `new File([], "filename")`
 
 type TLit = TInt | TNumber | TString | TUuid | TEnum | TBool | TFile;
 const litSchema = (lit: TLit): string => {
